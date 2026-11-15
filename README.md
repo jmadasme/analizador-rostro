@@ -12,8 +12,6 @@ Cada carpeta conserva el contenido original de su etapa, sin `.git`, dependencia
 instaladas ni binarios pesados. La documentación de operación y de código está en
 [`docs/`](docs/), y el sitio del proyecto en [`docs/index.html`](docs/index.html).
 
-> **Nota de preservación:** se removieron credenciales, claves o tokens detectados en 8 archivo(s) de esta familia. Los ejemplos y plantillas seguras se conservan.
-
 ## Índice de versiones
 
 | Versión | Qué aporta | Archivos |
@@ -37,6 +35,60 @@ python3 app.py
 
 Los modelos pesados no se versionan: v2 espera sus archivos ONNX en la ruta que declara su README. Sin cámara USB, la app no inicia el stream.
 
+<!-- ficha -->
+## Ficha de evaluación
+
+**Madurez global: 3.2/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 3/5 | Dos versiones, benchmark reproducible y modelo publicado con SHA256; sigue sin pruebas unitarias. |
+| Reproducibilidad | 2/5 | Exige modelos ONNX fuera del repositorio, versiones compatibles de OpenCV y ONNX Runtime, y una cámara visible. |
+| Documentación | 4/5 | README por versión, benchmark en docs/V2.md, datasheet, guía de desarrollador y referencias de los modelos. |
+| Honestidad de límites | 4/5 | Declara que la cámara USB no se probó, que no hay tests y que la edad exacta acierta menos de la mitad. |
+| Valor demostrativo | 4/5 | Compara dos arquitecturas con fps y timings, y publica la precisión medida de género y edad. |
+| Facilidad de despliegue | 2/5 | Instalación con venv y modelos manuales; en la placa el USB no entra en host mode sin hub con PD. |
+
+Pipeline de dos etapas con benchmark honesto y mejoras claras sobre la primera versión. Sirve para estudiar visión en CPU; los modelos y la cámara limitan el despliegue directo.
+
+## Lo que no funcionó
+
+### AnalizadorRostroUNOQ — La primera versión no veía el rostro
+
+En el benchmark preliminar de la v2, el mismo stream sintético de 640×480 daba 7,5 fps y cero rostros con Haar, que no detectó el recorte. La v2, con YuNet y tracker, alcanzó 21,2 fps, un rostro, detección de 24 a 40 ms y clasificación cercana a 99 ms. El cambio de detector explica la mejora.
+
+### AnalizadorRostroUNOQ — Modelo ONNX ausente al publicar
+
+El artefacto de entrenamiento quedó fuera del repositorio y la aplicación arrancaba sin el modelo. Se entrenó en GitHub Actions, ejecución 41117352948, diez épocas en CPU, y se publicó como asset con SHA256. El backend automático cae a Caffe y, si tampoco está, a un modo degradado con model_error.
+
+### AnalizadorRostroUNOQ — Buckets de edad incompatibles entre modelos
+
+Los rangos de edad del modelo UTKFace no coincidían con los del clasificador Caffe de respaldo, y el error pasaba inadvertido al cambiar de backend. Se separaron las constantes de cada modelo y se dejó explícito qué etiqueta corresponde a cada uno. La exactitud limitada de la edad sigue declarada.
+
+## Preguntas típicas
+
+**¿Qué versión conviene usar?**
+
+v2 para uso real: YuNet es más estable y el tracker evita reclasificar cada frame. v1 queda como referencia del primer enfoque.
+
+**¿Necesito GPU?**
+
+No. El pipeline está pensado para CPU; la UNO Q no tiene GPU dedicada.
+
+**¿Por qué no se incluyen los modelos?**
+
+Pesan decenas de megabytes y tienen licencias propias. El README indica dónde colocarlos.
+
+**¿La cámara no aparece, qué reviso?**
+
+Que el dispositivo USB esté visible en el sistema, los permisos de video y el índice de cámara configurado.
+
+**¿Puedo usar otra placa?**
+
+Sí, si tiene Linux y USB. El código no depende de la UNO Q más allá de la ruta de instalación.
+
+<!-- /ficha -->
+
 ## Documentación
 
 - [`docs/datasheet.md`](docs/datasheet.md) — instalación, operación y límites.
@@ -44,9 +96,9 @@ Los modelos pesados no se versionan: v2 espera sus archivos ONNX en la ruta que 
 - [`docs/REFERENCES.md`](docs/REFERENCES.md) — estándares, librerías y fuentes.
 - [`docs/index.html`](docs/index.html) — página del proyecto (GitHub Pages).
 
-## Alcance y honestidad
+## El proyecto en detalle
 
-## AnalizadorRostroUNOQ v2
+### AnalizadorRostroUNOQ v2
 
 <p align="center">
   <img alt="Python 3.10+" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white">
