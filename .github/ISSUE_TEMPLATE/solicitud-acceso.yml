@@ -1,0 +1,39 @@
+name: Solicitud de acceso
+description: Pedir acceso a una versión privada de Analizador de Rostro.
+title: "[Acceso] analizador-rostro"
+labels: ["solicitud-acceso"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Este formulario pide acceso a una versión privada de **Analizador de Rostro**.
+        La primera versión (`AnalizadorRostroUNOQ`) es pública y gratuita.
+  - type: dropdown
+    id: version
+    attributes:
+      label: Versión solicitada
+      options:
+        - "AnalizadorRostroUNOQ-v2"
+    validations:
+      required: true
+  - type: input
+    id: uso
+    attributes:
+      label: Tipo de uso
+      description: Personal, educativo, comercial, interno, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto
+      description: Contame qué querés construir, para qué y por qué necesitás esta versión.
+    validations:
+      required: true
+  - type: checkboxes
+    id: condiciones
+    attributes:
+      label: Condiciones
+      options:
+        - label: Entiendo que esta versión es privada, que no se redistribuye y que el acceso se otorga por autorización escrita.
+          required: true
