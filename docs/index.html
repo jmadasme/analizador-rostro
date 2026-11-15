@@ -134,6 +134,28 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
   .stat{border-right:0;border-bottom:1px solid var(--line)}
   h1{font-size:42px}
 }
+
+/* ── Contenido heredado del proyecto original, en clave sobria ── */
+.rich{max-width:78ch}
+.rich p{margin:0 0 14px;color:#c3d4da}
+.rich h3{margin:26px 0 10px;font-size:19px;letter-spacing:-.02em}
+.rich h4{margin:22px 0 8px;font-size:15px;letter-spacing:-.01em}
+.rich ul,.rich ol{margin:0 0 16px;padding-left:22px;color:#c3d4da}
+.rich li{margin:0 0 6px}
+.rich figure{margin:22px 0;border:1px solid var(--line);border-radius:16px;padding:10px;background:rgba(11,34,43,.5)}
+.rich figure img{width:100%;display:block;border-radius:10px}
+.rich figcaption{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:9px;line-height:1.5}
+.rich .table-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px}
+.rich table{border-collapse:collapse;width:100%;font-size:13.5px}
+.rich th,.rich td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.rich th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:rgba(11,34,43,.6)}
+.rich tr:last-child td{border-bottom:0}
+.rich pre{margin:18px 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#04141a;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.6;color:#cfe3e8}
+.rich code{font-family:var(--mono);font-size:.92em}
+.rich .note{margin:18px 0;padding:13px 16px;border-left:2px solid var(--accent);background:rgba(42,157,143,.07);color:#c3d4da;font-size:14px}
+.rich .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.rich .card-grid .card{margin:0}
+
 </style>
 <link rel="stylesheet" href="assets/community.css?v=1">
 </head>
@@ -186,36 +208,46 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
   <a href="https://github.com/jmadasme/analizador-rostro/tree/main/versions/AnalizadorRostroUNOQ-v2" target="_blank" rel="noopener">Ver carpeta <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </article></div>
 </div></section>
-
-<section class="section tight"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">03 — Cómo se usa</div><h2>De la carpeta a la práctica.</h2></div>
-  <div class="timeline"><div class="step reveal"><div class="step-n">01</div><h4>Elegí la versión</h4><p>v2 si querés el pipeline con tracker; v1 si necesitás comparar el enfoque original.</p></div><div class="step reveal"><div class="step-n">02</div><h4>Conectá la cámara</h4><p>La UNO Q debe ver el dispositivo USB antes de levantar la app.</p></div><div class="step reveal"><div class="step-n">03</div><h4>Instalá dependencias</h4><p>OpenCV y ONNX Runtime según el requirements de la carpeta.</p></div><div class="step reveal"><div class="step-n">04</div><h4>Abrí el stream</h4><p>El puerto por defecto es 8001 en v2 y 8000 en v1.</p></div></div>
-</div></section>
-
-<section class="section tight"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">04 — Decisiones</div><h2>Lo que lo hace distinto</h2></div>
-  <div class="features"><div class="feature reveal"><h4>Dos etapas</h4><p>Detección y clasificación no compiten por el mismo frame.</p></div><div class="feature reveal"><h4>Tracker IoU</h4><p>Mantiene la identidad entre detecciones y reduce el parpadeo.</p></div><div class="feature reveal"><h4>Stream MJPEG</h4><p>Se ve desde el navegador sin cliente adicional.</p></div><div class="feature reveal"><h4>Benchmark incluido</h4><p>v2 documenta tiempos y comportamiento en docs/V2.md.</p></div><div class="feature reveal"><h4>Funciona local</h4><p>No depende de una API de visión en la nube.</p></div><div class="feature reveal"><h4>Dos detectores</h4><p>Haar en v1 y YuNet en v2, comparables lado a lado.</p></div></div>
-</div></section>
-
-<section class="section tight" id="stack"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">05 — Stack y arranque</div><h2>Con qué está construido</h2></div>
-  <div class="stack-grid">
-    <div class="reveal"><div class="chips"><span class="chip">Python</span><span class="chip">OpenCV</span><span class="chip">YuNet</span><span class="chip">ONNX</span><span class="chip">Arduino UNO Q</span><span class="chip">MJPEG</span></div><div class="note"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Los modelos pesados no se versionan: v2 espera sus archivos ONNX en la ruta que declara su README. Sin cámara USB, la app no inicia el stream. Se removieron secretos en 8 archivo(s) de esta familia.</span></div></div>
-    <div class="terminal reveal"><div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><pre>git clone https://github.com/jmadasme/analizador-rostro.git
-cd analizador-rostro/versions/AnalizadorRostroUNOQ-v2
-python3 -m venv .venv &amp;&amp; . .venv/bin/activate
-pip install -r requirements.txt
-python3 app.py</pre></div>
-  </div>
-</div></section>
-
-<section class="section tight" id="docs"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">06 — Documentación</div><h2>Para usar y para entender.</h2><p class="section-sub">Cada documento está en el repositorio, versionado junto al código.</p></div>
-  <div class="docs"><a class="doc reveal" href="https://github.com/jmadasme/analizador-rostro/blob/main/docs/datasheet.md" target="_blank" rel="noopener"><span class="tag">DATASHEET</span><h4>Manual de operación</h4><p>Instalación, configuración, uso y diagnóstico.</p></a><a class="doc reveal" href="https://github.com/jmadasme/analizador-rostro/blob/main/docs/developer.md" target="_blank" rel="noopener"><span class="tag">DEVELOPER</span><h4>Guía de código</h4><p>Arquitectura, módulos, contratos y extensión.</p></a><a class="doc reveal" href="https://github.com/jmadasme/analizador-rostro/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener"><span class="tag">REFERENCES</span><h4>Referencias</h4><p>Estándares, librerías y fuentes oficiales.</p></a><a class="doc reveal" href="https://github.com/jmadasme/analizador-rostro/blob/main/docs/BITACORA.md" target="_blank" rel="noopener"><span class="tag">BITÁCORA</span><h4>Decisiones y pruebas</h4><p>Qué se intentó, qué falló y por qué se cambió.</p></a></div>
-</div></section>
-
-<section class="section tight"><div class="wrap"><div class="note reveal"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span><strong>Preservación:</strong> las versiones se copiaron sin <code>.git</code>, <code>node_modules</code>, entornos virtuales, compilados ni bases de datos. Los tokens y claves detectados fueron redactados; las plantillas <code>.example</code> se conservan. Las limitaciones conocidas están en la documentación, no escondidas.</span></div></div></section>
-
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">01 — La idea</div><h2>Visión artificial sin GPU y sin nube</h2><p class="section-sub">Enviar video a un servicio externo plantea privacidad, costo y latencia. Esta aplicación lleva detección y clasificación al QRB2210 y sirve el resultado como MJPEG dentro de la LAN.</p></div><div class="rich reveal"><div class="card-grid">
+<div class="card"><h3>La visión que se va de la red</h3><div><div></div><p>Los servicios de visión artificial reciben cada frame, cobran por uso y dependen de internet. Para un local, un evento o un prototipo, eso es caro y difícil de explicar a quien aparece en cámara.</p></div></div>
+<div class="card"><h3>Inferencia edge, video local</h3><div><div></div><p>YuNet + tracker IoU + clasificador ONNX en la placa. El video se queda en la LAN y se sirve como stream MJPEG a cualquier navegador, sin instalar nada en el cliente.</p></div></div>
+</div></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">02 — El recorrido</div><h2>Cómo funciona, paso a paso</h2><p class="section-sub">Detección y clasificación separadas para gastar CPU solo cuando hace falta.</p></div><div class="rich reveal"><div class="timeline">
+<div class="step"><div class="step-n">01</div><h4>Captura</h4><div><p>Logitech Brio USB o IP Webcam MJPEG por WiFi, con resolución reducida para el pipeline.</p></div></div>
+<div class="step"><div class="step-n">02</div><h4>Detección</h4><div><p>YuNet a 320 px cada N frames, con fallback Haar si falta el modelo.</p></div></div>
+<div class="step"><div class="step-n">03</div><h4>Tracker IoU</h4><div><p>Conserva la última predicción y evita el parpadeo de etiquetas entre frames.</p></div></div>
+<div class="step"><div class="step-n">04</div><h4>Clasificación</h4><div><p>ONNX UTKFace o Caffe Levi &amp; Hassner, en ciclos separados de la detección.</p></div></div>
+<div class="step"><div class="step-n">05</div><h4>Anotación y stream</h4><div><p>Cajas, etiquetas y HUD sobre MJPEG para cualquier navegador de la red.</p></div></div>
+</div></div></div></section>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">03 — Bajo el capó</div><h2>Un pipeline con dos cadencias</h2><p class="section-sub">Detectar es caro; clasificar también. Separar los ciclos y reutilizar tracks es lo que permite mantener la UI fluida en CPU.</p></div><div class="rich reveal"><figure><img src="assets/rich/pipeline.svg" alt="Pipeline de detección, tracker y clasificación" loading="lazy"><figcaption>docs/assets/pipeline.svg · detección, IoU y clasificación</figcaption></figure>
+<div class="card-grid">
+<div class="card"><h3>YuNet primero</h3><div><p>Detección frontal rápida y liviana, con Haar como red de seguridad.</p></div></div>
+<div class="card"><h3>Tracker con memoria</h3><div><p>Un track desaparecido se conserva hasta dos frames para no perder la etiqueta.</p></div></div>
+<div class="card"><h3>Modo reposo</h3><div><p>Sin clientes MJPEG no hay inferencia ni JPEG: la CPU queda casi libre.</p></div></div>
+</div></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">04 — Lo que lo hace distinto</div><h2>Decisiones de ingeniería</h2><p class="section-sub">Un proyecto completo: dataset, entrenamiento, runtime, UI y despliegue.</p></div><div class="rich reveal"><div class="features">
+<div class="feature"><h3>YuNet + Haar</h3><div><p>Detección frontal con score 0.6 y NMS 0.3, y fallback clásico si falta el modelo.</p></div></div>
+<div class="feature"><h3>Tracker IoU</h3><div><p>Empareja detecciones con tracks y conserva predicciones para estabilizar la UI.</p></div></div>
+<div class="feature"><h3>Dos backends</h3><div><p>ONNX propio entrenado con UTKFace o Caffe de Levi &amp; Hassner; `auto` prefiere el ONNX.</p></div></div>
+<div class="feature"><h3>Entrenamiento incluido</h3><div><p>Pipeline UTKFace con métricas de test: género 84,56 %, edad exacta 48,17 %, ±1 bucket 83,8 %.</p></div></div>
+<div class="feature"><h3>MJPEG multi-cliente</h3><div><p>Stream para varios navegadores y snapshots, sin plugins ni dependencias en el cliente.</p></div></div>
+<div class="feature"><h3>Privacidad por diseño</h3><div><p>Sin envío de frames a Internet; advertencias explícitas sobre datos biométricos y consentimiento.</p></div></div>
+</div></div></div></section>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">05 — Stack y arranque</div><h2>Con qué está construido</h2><p class="section-sub">OpenCV, ONNX Runtime y FastAPI sobre el Linux de la UNO Q; PyTorch solo para entrenar.</p></div><div class="rich reveal"><p><p>El runtime es deliberadamente liviano: OpenCV para captura y YuNet, ONNX Runtime para clasificar y FastAPI para servir la UI y el stream.</p></p>
+<p>Python FastAPI OpenCV YuNet ONNX Runtime PyTorch UTKFace Caffe MJPEG Debian QRB2210 IP Webcam</p>
+<div class="note"><div><span>No identifica personas: detecta rostros y estima atributos. Usalo con consentimiento, aviso claro y sin almacenar snapshots sin autorización.</span></div></div>
+<p>arrancar el analizador</p>
+<pre><span>$</span> git clone https://github.com/wanderc137/AnalizadorRostroUNOQ-v2
+<span>$</span> cd AnalizadorRostroUNOQ-v2
+<span>$</span> pip install -r requirements.txt
+<span>$</span> ./scripts/download_model.sh
+<span>$</span> ./scripts/run.sh
+<span># UI → http://&lt;IP_UNO_Q&gt;:8001/</span></pre></div></div></section>
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">06 — Documentación</div><h2>Todo está escrito</h2><p class="section-sub">Cada decisión, cada límite y cada comando están documentados en el repositorio. Sin folletos: lo que funciona se muestra, lo que no, también.</p></div><div class="rich reveal"><div class="card-grid">
+<a class="card" href=""><h3>Datasheet</h3><p>Instalación, operación, configuración, API, calibración y privacidad.</p></a>
+<a class="card" href=""><h3>Guía de desarrollador</h3><p>Módulos, hilos, locks, frontend, entrenamiento y extensión.</p></a>
+<a class="card" href=""><h3>Referencias</h3><p>YuNet, UTKFace, Levi & Hassner, ONNX, FastAPI, MJPEG y RGPD.</p></a>
+</div></div></div></section>
 <section class="cta"><div class="wrap"><div class="cta-box reveal">
   <div class="kicker">Siguiente paso</div><h2>¿Te animás?</h2>
   <p>Usá esta familia como base para analizador de rostro. Está documentada para que puedas entenderla, ejecutarla y continuarla sin adivinar.</p>
